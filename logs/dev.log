@@ -1,0 +1,107 @@
+2025-04-11 09:01:25.250 [restartedMain] INFO  com.example.myapp.MyappApplication - Starting MyappApplication using Java 17.0.11 with PID 13572 (D:\Coding\Springboot\myapp\myapp\build\classes\java\main started by PankajDoodhwal in D:\Coding\Springboot\myapp\myapp)
+2025-04-11 09:01:25.251 [restartedMain] DEBUG com.example.myapp.MyappApplication - Running with Spring Boot v3.4.4, Spring v6.2.5
+2025-04-11 09:01:25.251 [restartedMain] INFO  com.example.myapp.MyappApplication - The following 1 profile is active: "dev"
+2025-04-11 09:01:25.289 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-04-11 09:01:25.289 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-04-11 09:01:25.696 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-11 09:01:25.751 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 50 ms. Found 1 JPA repository interface.
+2025-04-11 09:01:26.132 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-11 09:01:26.143 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-11 09:01:26.144 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-11 09:01:26.145 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-04-11 09:01:26.183 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-11 09:01:26.183 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 893 ms
+2025-04-11 09:01:26.296 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-11 09:01:26.357 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-04-11 09:01:26.391 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-11 09:01:26.625 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-11 09:01:26.656 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-11 09:01:26.957 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@23ac933d
+2025-04-11 09:01:26.959 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-11 09:01:26.993 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-11 09:01:26.994 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-11 09:01:27.008 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-11 09:01:27.016 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(12, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@429d30a4) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@356e4c67)
+2025-04-11 09:01:27.016 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(-9, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@52b1376d) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@23c541ad)
+2025-04-11 09:01:27.016 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(-3, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@8f64d61) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@4f3c356c)
+2025-04-11 09:01:27.016 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(4003, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@146d79b9) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@1dac8ab0)
+2025-04-11 09:01:27.016 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(4001, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@278b4121) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@93287e9)
+2025-04-11 09:01:27.016 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(4002, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@766d97c7) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@f6d7ab0)
+2025-04-11 09:01:27.016 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(2004, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@7292b035) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@6f027c41)
+2025-04-11 09:01:27.016 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(2005, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@754b1dc9) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@1197512a)
+2025-04-11 09:01:27.016 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(2011, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@76635835) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@a7fd2cc)
+2025-04-11 09:01:28.187 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-11 09:01:28.287 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-11 09:01:28.803 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-11 09:01:29.402 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-04-11 09:01:29.426 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-11 09:01:29.465 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-11 09:01:29.474 [restartedMain] INFO  com.example.myapp.MyappApplication - Started MyappApplication in 4.653 seconds (process running for 5.007)
+2025-04-11 09:01:35.070 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-11 09:01:35.071 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-11 09:01:35.073 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-11 09:01:35.305 [http-nio-8080-exec-1] INFO  c.e.myapp.controller.UserController - calling createUser method
+2025-04-11 09:01:35.398 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    insert 
+    into
+        user
+        (email, name) 
+    values
+        (?, ?)
+2025-04-11 09:01:35.497 [http-nio-8080-exec-1] INFO  RequestTraceLogger - <api_name>
+    (createUser)
+	<logger>
+		(UserController)
+			calling createUser method
+	</logger>
+	<context>
+		REQUEST_BODY: {
+  "name": "Alice",
+  "email": "alice@example.com"
+}
+
+		ROW_REQUEST: User(id=7, name=Alice, email=alice@example.com)
+		RESPONSE_BODY: {"id":7,"name":"Alice","email":"alice@example.com"}
+	</context>
+	<sql>
+		insert into user (email,name) values (?,?)
+	</sql>
+	<flow>
+	</flow>
+</api_name>
+
+2025-04-11 09:02:37.516 [http-nio-8080-exec-5] INFO  c.e.myapp.controller.UserController - calling getAllUser method
+2025-04-11 09:02:37.516 [http-nio-8080-exec-5] INFO  c.example.myapp.service.UserService - getting all users from the databse
+2025-04-11 09:02:37.688 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.name 
+    from
+        user u1_0
+2025-04-11 09:02:37.719 [http-nio-8080-exec-5] INFO  RequestTraceLogger - <api_name>
+    (getUser)
+	<logger>
+		(UserController)
+			calling getAllUser method
+		(UserService)
+			getting all users from the databse
+	</logger>
+	<context>
+		REQUEST_BODY: 
+		RESPONSE_BODY: {"success":true,"message":"Users fetched successfully","data":[{"id":1,"name":"Alice","email":"alice@example.com"},{"id":2,"name":"Alice","email":"alice@example.com"},{"id":3,"name":"Alice","email":"alice@example.com"},{"id":4,"name":"Alice","email":"alice@example.com"},{"id":5,"name":"Alice","email":"alice@example.com"},{"id":6,"name":"Alice","email":"alice@example.com"},{"id":7,"name":"Alice","email":"alice@example.com"}],"traceId":"0d7bd412-bf1f-48a8-8eec-a575769e766a"}
+	</context>
+	<sql>
+		select u1_0.id,u1_0.email,u1_0.name from user u1_0
+	</sql>
+	<flow>
+	</flow>
+</api_name>
+
