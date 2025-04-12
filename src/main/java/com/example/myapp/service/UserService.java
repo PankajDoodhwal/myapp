@@ -21,6 +21,10 @@ public class UserService {
 
     private static final PrettyLogger logger = PrettyLogger.getLogger(UserService.class);
 
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
 
     public List<User> getAllUsers(){
         logger.info("getting all users from the databse");

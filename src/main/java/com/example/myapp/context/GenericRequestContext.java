@@ -1,5 +1,6 @@
 package com.example.myapp.context;
 
+import com.example.myapp.model.LogEntry;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.MDC;
@@ -12,7 +13,7 @@ import java.util.*;
 public class GenericRequestContext {
     private final Map<String, Object> context = new LinkedHashMap<>();
     private final Set<String> classTrace = new LinkedHashSet<>();
-    private final Map<String, List<String>> logLines = new LinkedHashMap<>();
+    private final List<LogEntry> logs = new ArrayList<>();
     private final List<String> sqlLogs = new ArrayList<>();
     private final String traceId = UUID.randomUUID().toString();
 
@@ -33,7 +34,7 @@ public class GenericRequestContext {
     }
 
     public void addLog(String className, String message) {
-        logLines.computeIfAbsent(className, k -> new ArrayList<>()).add(message);
+        logs.add(new LogEntry(className, message));
     }
 
     public void addSqlLog(String sql) {
@@ -42,14 +43,11 @@ public class GenericRequestContext {
 
     public String getFormattedLogs() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\t<logger>\n");
-        logLines.forEach((className, messages) -> {
-            sb.append("\t\t(").append(className).append(")\n");
-            for (String msg : messages) {
-                sb.append("\t\t\t").append(msg).append("\n");
-            }
-        });
-        sb.append("\t</logger>\n");
+        sb.append("<logger>\n");
+        for (LogEntry log : logs) {
+            sb.append("    ").append(log.format()).append("\n");
+        }
+        sb.append("</logger>\n");
         return sb.toString();
     }
 
@@ -91,7 +89,7 @@ public class GenericRequestContext {
     public void clear() {
         context.clear();
         classTrace.clear();
-        logLines.clear();
+        logs.clear();
     }
 }
 

@@ -1,7 +1,9 @@
 package com.example.myapp.config.filter;
 
+import com.example.myapp.config.logging.PrettyLogger;
 import com.example.myapp.context.GenericRequestContext;
 import com.example.myapp.context.GenericRequestContextHolder;
+import com.example.myapp.controller.UserController;
 import com.example.myapp.wrapper.CachedBodyHttpServletRequest;
 import com.example.myapp.wrapper.CachedBodyHttpServletResponse;
 import jakarta.servlet.*;
@@ -18,7 +20,7 @@ import java.nio.charset.StandardCharsets;
 
 @Component
 public class ContextFilter implements Filter {
-    private static final Logger logger = LoggerFactory.getLogger(ContextFilter.class);
+    private static final PrettyLogger logger = PrettyLogger.getLogger(ContextFilter.class);
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

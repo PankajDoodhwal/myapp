@@ -61,4 +61,9 @@ public class CachedBodyHttpServletResponse extends HttpServletResponseWrapper {
         out.write(getBody());
         out.flush();
     }
+
+    public byte[] getCaptureAsBytes() throws IOException {
+        writer.flush();
+        return cachedOutputStream.toByteArray();
+    }
 }

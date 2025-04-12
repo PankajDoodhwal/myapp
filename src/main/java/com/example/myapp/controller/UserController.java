@@ -21,7 +21,7 @@ public class UserController {
 
     private static final PrettyLogger logger = PrettyLogger.getLogger(UserController.class);
 
-        @GetMapping
+    @GetMapping
     public ApiResponse<List<User>> getUser() {
         GenericRequestContext ctx = GenericRequestContextHolder.get();
         ctx.setApiName("getUser");
@@ -32,11 +32,13 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user){
+    public ApiResponse<User> createUser(@RequestBody User user){
         GenericRequestContext ctx = GenericRequestContextHolder.get();
         ctx.setApiName("createUser");
         logger.info("calling createUser method");
-        ctx.put("ROW_REQUEST", user);
-        return userService.createUser(user);
+        User newUser = userService.createUser(user);
+        logger.info("Created new user:- " + newUser.toString());
+        logger.info(ApiResponse.success(newUser, "User Created Successfully", ctx.getTraceId()).toString());
+        return ApiResponse.success(newUser, "User Created Successfully", ctx.getTraceId());
     }
 }
