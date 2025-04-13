@@ -1,5 +1,7 @@
 package com.example.myapp.controller;
 
+import com.example.myapp.common.Entity;
+import com.example.myapp.common.MofConstants;
 import com.example.myapp.config.logging.PrettyLogger;
 import com.example.myapp.context.GenericRequestContext;
 import com.example.myapp.context.GenericRequestContextHolder;
@@ -35,10 +37,11 @@ public class UserController {
     public ApiResponse<User> createUser(@RequestBody User user){
         GenericRequestContext ctx = GenericRequestContextHolder.get();
         ctx.setApiName("createUser");
+        ctx.put(MofConstants.CREATED_ENTITY_TYPE, Entity.USER);
         logger.info("calling createUser method");
         User newUser = userService.createUser(user);
         logger.info("Created new user:- " + newUser.toString());
-        logger.info(ApiResponse.success(newUser, "User Created Successfully", ctx.getTraceId()).toString());
+        ctx.put(MofConstants.CREATED_ENTITY_ID, newUser.getId());
         return ApiResponse.success(newUser, "User Created Successfully", ctx.getTraceId());
     }
 }

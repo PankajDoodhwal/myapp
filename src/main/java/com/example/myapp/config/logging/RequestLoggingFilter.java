@@ -33,7 +33,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
         String method = request.getMethod();
         String endpoint = request.getRequestURI();
 
-        RequestLog log = requestLogService.logStart(traceId, method, endpoint);
+        RequestLog log = requestLogService.logStart(traceId, method, endpoint, ctx);
 
         // Capture response with wrapper
         CachedBodyHttpServletResponse wrappedResponse = new CachedBodyHttpServletResponse(response);
@@ -43,7 +43,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
         } finally {
             int status = wrappedResponse.getStatus();
             String respBody = new String(wrappedResponse.getCaptureAsBytes(), response.getCharacterEncoding());
-            requestLogService.logEnd(log, status, respBody, status >= 200 && status < 400);
+            requestLogService.logEnd(log, status, respBody, status >= 200 && status < 400, ctx);
             wrappedResponse.copyBodyToResponse();
         }
     }
