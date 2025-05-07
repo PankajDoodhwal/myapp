@@ -1,18 +1,21 @@
 package com.example.myapp.config.filter;
 
-import com.example.myapp.dto.ApiErrorResponse;
+import com.example.myapp.config.logging.PrettyLogger;
+import com.example.myapp.controller.UserController;
 import com.example.myapp.security.jwt.JwtUtils;
 import com.example.myapp.security.services.UserDetailsServiceImpl;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.io.IOException;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.hibernate.annotations.ValueGenerationType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -20,40 +23,41 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
     @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
     private JwtUtils jwtUtils;
 
+    private static final PrettyLogger logger = PrettyLogger.getLogger(UserController.class);
+
+    @SuppressWarnings("NullableProblems")
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException, java.io.IOException {
+            throws ServletException, java.io.IOException {
         try {
-            String authHeader = request.getHeader("Authorization");
+            String jwt = parseJwt(request);
+            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+                String username = jwtUtils.getUserNameFromJwtToken(jwt);
+                logger.info("UserName:- " + username);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-            String token = null;
-            String email= null;
+                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                token = authHeader.substring(7);
-                email = jwtUtils.getUserNameFromJwtToken(token);
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
-
-            if (token == null) {
-                filterChain.doFilter(request, response);
-                return;
-            }
-        } catch (AccessDeniedException e) {
-            ApiErrorResponse errorResponse = new ApiErrorResponse(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.getWriter().write(toJson(errorResponse));
+        } catch (Exception e) {
+            logger.error("Cannot set user authentication: {}", e);
         }
+
+        filterChain.doFilter(request, response);
+
     }
 
-    private String toJson(ApiErrorResponse response) {
-        try {
-            return objectMapper.writeValueAsString(response);
-        } catch (Exception e) {
-            return ""; // Return an empty string if serialization fails
+    private String parseJwt(HttpServletRequest request) {
+        String headerAuth = request.getHeader("Authorization");
+
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
+            return headerAuth.substring(7);
         }
+
+        return null;
     }
 }

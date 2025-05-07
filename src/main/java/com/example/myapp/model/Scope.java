@@ -5,31 +5,30 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+
 import java.util.List;
 
 @Entity
-@Data // includes @Getter, @Setter, @ToString, etc.
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicUpdate
 @DynamicInsert
-@ToString(exclude = "scopeList")
-public class User {
-
+@Getter
+@Setter
+@ToString(exclude = "user")
+public class Scope {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String scopeName;
 
-    @Column(unique = true, nullable = false)
-    private String email;
-
-    private String password;
-
-    private String role = "USER";
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     @JsonIgnore
-    private List<Scope> scopeList;
+    private User user;
+
+    @OneToMany(mappedBy = "scope", cascade = CascadeType.ALL)
+    private List<Category> categories;
 }

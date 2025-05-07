@@ -47,29 +47,4 @@ public class UserController {
         return ApiResponse.success(loginResponse, "User Loged in Successfully", ctx.getTraceId());
     }
 
-//    @Autowired
-//    private UserService userService;
-//
-//    private static final PrettyLogger logger = PrettyLogger.getLogger(UserController.class);
-//
-//    @GetMapping
-//    public ApiResponse<List<User>> getUser() {
-//        GenericRequestContext ctx = GenericRequestContextHolder.get();
-//        ctx.setApiName("getUser");
-//
-//        logger.info("calling getAllUser method");
-//        List<User> users = userService.getAllUsers();
-//        return ApiResponse.success(users, "Users fetched successfully", ctx.getTraceId());
-//    }
-//
-//    @PostMapping
-//    public ApiResponse<User> createUser(@RequestBody User user){
-//        GenericRequestContext ctx = GenericRequestContextHolder.get();
-//        ctx.setApiName("createUser");
-//        logger.info("calling createUser method");
-//        User newUser = userService.createUser(user);
-//        logger.info("Created new user:- " + newUser.toString());
-//        logger.info(ApiResponse.success(newUser, "User Created Successfully", ctx.getTraceId()).toString());
-//        return ApiResponse.success(newUser, "User Created Successfully", ctx.getTraceId());
-//    }
 }
