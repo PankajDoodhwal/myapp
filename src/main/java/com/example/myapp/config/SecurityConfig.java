@@ -61,6 +61,12 @@ public class SecurityConfig {
                         auth
                                 .requestMatchers("/api/auth/signup/**").permitAll()
                                 .requestMatchers("/api/auth/login/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**").permitAll()
+                                .requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/swagger-resources/**").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/webjars/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/api/scope/create/**").authenticated()
                                 .anyRequest().authenticated()
                 );
