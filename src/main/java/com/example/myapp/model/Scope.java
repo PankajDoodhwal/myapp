@@ -1,5 +1,6 @@
 package com.example.myapp.model;
 
+import com.example.myapp.common.TransactionType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,6 +24,9 @@ public class Scope {
     private Long id;
 
     private String scopeName;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionType txnType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
