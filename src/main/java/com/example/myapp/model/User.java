@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @DynamicUpdate
 @DynamicInsert
-@ToString(exclude = "scopeList")
+@ToString(exclude = {"scopeList", "accountList"})
 public class User {
 
     @Id
@@ -32,4 +32,8 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Scope> scopeList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Account> accountList;
 }
