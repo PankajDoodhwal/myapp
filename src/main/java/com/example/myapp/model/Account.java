@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @DynamicInsert
 @Getter
 @Setter
-@ToString(exclude = "")
+@ToString(exclude = "user")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,6 @@
 package com.example.myapp.security.jwt;
 
 import com.example.myapp.config.logging.PrettyLogger;
-import com.example.myapp.controller.ScopeController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,7 +15,7 @@ import java.util.Map;
 
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
-    private static final PrettyLogger logger = PrettyLogger.getLogger(ScopeController.class);
+    private static final PrettyLogger logger = PrettyLogger.getLogger(AuthEntryPointJwt.class);
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authenticationException) throws IOException {
