@@ -1,6 +1,7 @@
 package com.example.myapp.service;
 
 import com.example.myapp.config.logging.PrettyLogger;
+import com.example.myapp.dto.CategoryResponse;
 import com.example.myapp.dto.CreateCategoryRequest;
 import com.example.myapp.exception.DuplicateException;
 import com.example.myapp.exception.RestrictedOperation;
@@ -55,12 +56,24 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public List<Category> getAllCategories() {
-//        getting all the categories from database;
+    public List<CategoryResponse> getAllCategories() {
         User user = projectUtils.getUserFromToken();
         logger.info("Getting all the Categories for the user");
         List<Category> categoryList = categoryRepository.getAllCategoriesByUser(user.getId());
-        logger.info("Fetched all the categories successfully successfully.");
-        return categoryList;
+        logger.info("Fetched all the categories successfully.");
+
+        logger.info("Converting category list into category response list");
+
+        return categoryList.stream().map(category -> {
+            Scope scope = category.getScope();
+
+            return new CategoryResponse(
+                    category.getName(),
+                    scope != null ? String.valueOf(scope.getId()) : null,
+                    scope != null ? scope.getScopeName() : null,
+                    scope != null ? scope.getTxnType().toString() : null
+            );
+        }).toList();
     }
+
 }

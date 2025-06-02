@@ -5,6 +5,7 @@ import com.example.myapp.common.MofConstants;
 import com.example.myapp.config.logging.PrettyLogger;
 import com.example.myapp.context.GenericRequestContext;
 import com.example.myapp.context.GenericRequestContextHolder;
+import com.example.myapp.dto.CategoryResponse;
 import com.example.myapp.dto.CreateCategoryRequest;
 import com.example.myapp.model.Category;
 import com.example.myapp.response.ApiResponse;
@@ -37,10 +38,10 @@ public class CategoryController {
 
     @SuppressWarnings("unused")
     @GetMapping("/get-all-categories")
-    public ApiResponse<List<Category>> getAllCategories(){
+    public ApiResponse<List<CategoryResponse>> getAllCategories(){
         GenericRequestContext ctx = GenericRequestContextHolder.get();
         logger.info("Getting all categories:- ");
-        List<Category> allCategories = categoryService.getAllCategories();
+        List<CategoryResponse> allCategories = categoryService.getAllCategories();
         logger.info("Fetched all the Categories:- ");
         return ApiResponse.success(allCategories, "Fetched all the categories successfully.", ctx.getTraceId());
     }

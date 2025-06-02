@@ -10,6 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 
 @Component
 public class ProjectUtils {
@@ -33,5 +36,21 @@ public class ProjectUtils {
             return newUser;
         }
         return null;
+    }
+
+    public BigDecimal addAndRound(Double num1, Double num2) {
+        BigDecimal bd1 = BigDecimal.valueOf(num1);
+        BigDecimal bd2 = BigDecimal.valueOf(num2);
+
+        BigDecimal result = bd1.add(bd2);
+        return result.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal subAndRound(Double num1, Double num2) {
+        BigDecimal bd1 = BigDecimal.valueOf(num1);
+        BigDecimal bd2 = BigDecimal.valueOf(num2);
+
+        BigDecimal result = bd1.subtract(bd2);
+        return result.setScale(2, RoundingMode.HALF_UP);
     }
 }

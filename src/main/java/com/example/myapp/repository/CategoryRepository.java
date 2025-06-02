@@ -16,4 +16,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     String getAllCategoriesByUser = "SELECT c.* from category c WHERE c.scope_id IN (SELECT s.id from scope s where s.user_id = :userId)";
     @Query(value = getAllCategoriesByUser, nativeQuery = true)
     List<Category> getAllCategoriesByUser(@Param("userId") Long id);
+
+    String getAllCategoriesByUserAndScopeID = "SELECT c.* from category c WHERE c.scope_id = :scopeId";
+    @Query(value = getAllCategoriesByUserAndScopeID, nativeQuery = true)
+    List<Category> getAllCategoriesByUserAndScopeId(@Param("scopeId") Long id);
 }
