@@ -5,6 +5,7 @@ import com.example.myapp.common.MofConstants;
 import com.example.myapp.config.logging.PrettyLogger;
 import com.example.myapp.context.GenericRequestContext;
 import com.example.myapp.context.GenericRequestContextHolder;
+import com.example.myapp.dto.AccountResponse;
 import com.example.myapp.dto.CreateAccountRequest;
 import com.example.myapp.model.Account;
 import com.example.myapp.response.ApiResponse;
@@ -37,10 +38,10 @@ public class AccountController {
 
     @SuppressWarnings("unused")
     @GetMapping("/get-all-accounts")
-    public ApiResponse<List<Account>> getAllAccountsByUser(){
+    public ApiResponse<List<AccountResponse>> getAllAccountsByUser(){
         GenericRequestContext ctx = GenericRequestContextHolder.get();
         logger.info("Fetching all the accounts for user");
-        List<Account> accountList = accountService.getAllAccountByUser();
+        List<AccountResponse> accountList = accountService.getAllAccountByUser();
         logger.info("Fetched All the accounts:- ");
         return ApiResponse.success(accountList, "Fetched All the account successfully", ctx.getTraceId());
     }

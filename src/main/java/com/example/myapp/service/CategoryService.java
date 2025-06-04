@@ -68,6 +68,7 @@ public class CategoryService {
             Scope scope = category.getScope();
 
             return new CategoryResponse(
+                    category.getId(),
                     category.getName(),
                     scope != null ? String.valueOf(scope.getId()) : null,
                     scope != null ? scope.getScopeName() : null,

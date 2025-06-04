@@ -2,6 +2,7 @@ package com.example.myapp.service;
 
 import com.example.myapp.common.AccountType;
 import com.example.myapp.config.logging.PrettyLogger;
+import com.example.myapp.dto.AccountResponse;
 import com.example.myapp.dto.CreateAccountRequest;
 import com.example.myapp.exception.DuplicateException;
 import com.example.myapp.exception.InvalidDataException;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
@@ -66,11 +68,30 @@ public class AccountService {
         return accountRepository.save(tempAccount);
     }
 
-    public List<Account> getAllAccountByUser(){
-        User user = projectUtils.getUserFromToken();
-        logger.info("Getting all the accounts for the users");
-        List<Account> accountList = accountRepository.getAllAccountByUserId(user.getId());
-        logger.info("Fetched all the accounts successfully.");
-        return accountList;
+    public List<AccountResponse> getAllAccountByUser() {
+        User user = projectUtils.getUserFromToken(); // Make sure this correctly retrieves the User entity
+        if (user == null) {
+            // Handle case where user is not found or not authenticated appropriately
+            // For example, throw an exception or return an empty list
+            return List.of();
+        }
+
+        // Assuming your AccountRepository has a method like findByUser or findByUserId
+        List<Account> accounts = accountRepository.getAllAccountByUserId(user.getId());
+        // OR accountRepository.findByUser(user);
+        // OR however you fetch accounts for the user
+
+        // Map the list of Account entities to a list of AccountResponse DTOs
+        return accounts.stream()
+                .map(account -> new AccountResponse(
+                        account.getId(),
+                        account.getBankName(),
+                        account.getAccountNumber(),
+                        account.getIfsc(),
+                        account.getAccountType().toString(), // Ensure this field exists and is a String on Account entity
+                        account.getBalance()
+                        // Map other fields if you added them to AccountResponse
+                ))
+                .collect(Collectors.toList());
     }
 }
