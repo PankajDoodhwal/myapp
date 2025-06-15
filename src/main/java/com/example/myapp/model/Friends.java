@@ -7,8 +7,6 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import java.util.List;
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -18,27 +16,17 @@ import java.util.List;
 @Getter
 @Setter
 @ToString(exclude = "user")
-public class Scope {
+public class Friends {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String scopeName;
+    private String friendName;
 
-    @Enumerated(EnumType.STRING)
-    private TransactionType txnType;
+    private String mobileNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
-
-    private Double overAllBudgetAllocated;
-
-    private Double overAllUsedBudget;
-
-    private Double overAllRemainingBudget;
-
-    @OneToMany(mappedBy = "scope", cascade = CascadeType.ALL)
-    private List<Category> categories;
 }

@@ -8,6 +8,9 @@ package com.example.myapp.dto;
 public record ScopeResponse(
         Long id,
         String scopeName,
-        String txnType // Or use your TransactionType enum if you want the frontend to handle enum strings
+        String txnType, // Or use your TransactionType enum if you want the frontend to handle enum strings
+        Double overAllBudgetAllocated,
+        Double overAllUsedBudget,
+        Double overAllRemainingBudget
 ) {
 }

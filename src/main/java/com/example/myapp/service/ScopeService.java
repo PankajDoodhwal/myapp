@@ -70,7 +70,10 @@ public class ScopeService {
                 .map(scope -> new ScopeResponse(
                         scope.getId(),
                         scope.getScopeName(),
-                        scope.getTxnType() != null ? scope.getTxnType().name() : null // Convert enum to String
+                        scope.getTxnType() != null ? scope.getTxnType().name() : null, // Convert enum to String
+                        scope.getOverAllBudgetAllocated(),
+                        scope.getOverAllUsedBudget(),
+                        scope.getOverAllRemainingBudget()
                 ))
                 .collect(Collectors.toList());
     }

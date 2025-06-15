@@ -6,6 +6,7 @@ import com.example.myapp.config.logging.PrettyLogger;
 import com.example.myapp.context.GenericRequestContext;
 import com.example.myapp.context.GenericRequestContextHolder;
 import com.example.myapp.dto.CreateTransactionRequest;
+import com.example.myapp.dto.TransactionResponse;
 import com.example.myapp.model.Transaction;
 import com.example.myapp.response.ApiResponse;
 import com.example.myapp.service.TransactionService;
@@ -39,11 +40,11 @@ public class TransactionController {
 
     @SuppressWarnings("unused")
     @PostMapping("/get-all-transactions")
-    public ApiResponse<List<Transaction>> getAllTransaction() {
+    public ApiResponse<List<TransactionResponse>> getAllTransaction() {
         GenericRequestContext ctx = GenericRequestContextHolder.get();
         logger.info("Fetching all the transactions");
 //        ctx.put(MofConstants.CREATED_ENTITY_TYPE, Entity.TRANSACTION);
-        List<Transaction> allTransactions = transactionService.fetchAllTheTransactions();
+        List<TransactionResponse> allTransactions = transactionService.fetchAllTheTransactions();
         logger.info("Fetched all the Transactiona:- " );
 //        ctx.put(MofConstants.CREATED_ENTITY_ID, newTransaction.getId());
         return ApiResponse.success(allTransactions, "Successfully fetched all Transactions", ctx.getTraceId());

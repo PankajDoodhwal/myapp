@@ -30,6 +30,12 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private TransactionType txnType;
 
+    private Double myAmount;
+    private Double settledAmount;
+    private Double unSettledAmount;
+    private Boolean isSettled;
+    private Boolean isSplitted;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnore

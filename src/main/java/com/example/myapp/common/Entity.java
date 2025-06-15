@@ -5,5 +5,7 @@ public enum Entity {
     SCOPE,
     ACCOUNT,
     CATEGORY,
-    TRANSACTION
+    TRANSACTION,
+    FRIENDS,
+    BUDGET,
 }

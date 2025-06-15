@@ -3,6 +3,7 @@ package com.example.myapp.service;
 import com.example.myapp.common.TransactionType;
 import com.example.myapp.config.logging.PrettyLogger;
 import com.example.myapp.dto.CreateTransactionRequest;
+import com.example.myapp.dto.TransactionResponse;
 import com.example.myapp.exception.InvalidDataException;
 import com.example.myapp.model.*;
 import com.example.myapp.repository.*;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionService {
@@ -30,6 +32,9 @@ public class TransactionService {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    BudgetRepository budgetRepository;
 
     private static final PrettyLogger logger = PrettyLogger.getLogger(TransactionService.class);
 
@@ -56,6 +61,10 @@ public class TransactionService {
         transaction.setTxnDate(createTransactionRequest.txnDate());
         transaction.setNote(createTransactionRequest.note());
 
+        transaction.setIsSettled(Boolean.TRUE);
+        transaction.setIsSplitted(Boolean.FALSE);
+        transaction.setUnSettledAmount(0.0);
+
         if(StringUtils.equalsIgnoreCase(createTransactionRequest.txnType(), "credit")){
             transaction.setTxnType(TransactionType.CREDIT);
         } else if (StringUtils.equalsIgnoreCase(createTransactionRequest.txnType(), "debit")){
@@ -65,6 +74,26 @@ public class TransactionService {
         }
 
         setBalanceForTransaction(transaction, createTransactionRequest);
+
+        updateBudgetAndScope(createTransactionRequest.txnDate(), createTransactionRequest, scope, user);
+    }
+
+    private void updateBudgetAndScope(LocalDateTime localDateTime, CreateTransactionRequest createTransactionRequest, Scope scope, User user) {
+        int budgetMonth = localDateTime.getMonthValue();
+        int budgetYear = localDateTime.getYear();
+
+        Budget budget = budgetRepository.getBudgetByMonthYearScopeAndUser(budgetMonth, budgetYear, scope.getId(), user.getId());
+
+        if(budget != null) {
+            budget.setUsedBudget(budget.getUsedBudget() + createTransactionRequest.amount());
+            budget.setRemainingBudget(budget.getRemainingBudget() - createTransactionRequest.amount());
+
+            scope.setOverAllRemainingBudget(scope.getOverAllRemainingBudget() - createTransactionRequest.amount());
+            scope.setOverAllUsedBudget(scope.getOverAllUsedBudget() != null ? scope.getOverAllUsedBudget() + createTransactionRequest.amount() : createTransactionRequest.amount());
+
+            budgetRepository.save(budget);
+            scopeRepository.save(scope);
+        }
     }
 
     private void setBalanceForTransaction(Transaction transaction, CreateTransactionRequest createTransactionRequest) {
@@ -76,10 +105,14 @@ public class TransactionService {
                 throw new InvalidDataException("Insufficient Balance");
             } else {
                 transaction.setAmount(createTransactionRequest.amount());
+                transaction.setMyAmount(createTransactionRequest.amount());
+                transaction.setSettledAmount(createTransactionRequest.amount());
                 account.setBalance(projectUtils.subAndRound(account.getBalance(), createTransactionRequest.amount()).doubleValue());
             }
         } else {
             transaction.setAmount(createTransactionRequest.amount());
+            transaction.setMyAmount(createTransactionRequest.amount());
+            transaction.setSettledAmount(createTransactionRequest.amount());
             account.setBalance(projectUtils.addAndRound(account.getBalance(), createTransactionRequest.amount()).doubleValue());
         }
 
@@ -115,11 +148,30 @@ public class TransactionService {
         return fetchedCategories;
     }
 
-    public List<Transaction> fetchAllTheTransactions() {
+    public List<TransactionResponse> fetchAllTheTransactions() {
         User user = projectUtils.getUserFromToken();
         logger.info("Getting all the transactions for the users");
         List<Transaction> transactionList = transactionRepository.getAllTransactionByUser(user.getId());
         logger.info("Fetched all the transactions successfully.");
-        return transactionList;
+        return transactionList
+                .stream()
+                .map(transaction -> new TransactionResponse(
+                        transaction.getId(),
+                        transaction.getAmount(),
+                        transaction.getNote(),
+                        transaction.getTxnDate(),
+                        transaction.getTxnType(),
+                        transaction.getMyAmount(),
+                        transaction.getSettledAmount(),
+                        transaction.getUnSettledAmount(),
+                        transaction.getIsSettled(),
+                        transaction.getIsSplitted(),
+                        transaction.getScope().getId(),
+                        transaction.getBankAccount().getId(),
+                        transaction.getCategories()
+                                .stream()
+                                .map(Category::getId)
+                                .collect(Collectors.toSet())
+                )).collect(Collectors.toList());
     }
 }
