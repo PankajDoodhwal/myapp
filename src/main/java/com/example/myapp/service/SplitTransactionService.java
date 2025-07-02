@@ -11,6 +11,7 @@ import com.example.myapp.utils.ProjectUtils;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class SplitTransactionService {
 
     private static final PrettyLogger logger = PrettyLogger.getLogger(SplitTransactionService.class);
 
+    @Transactional
     public List<SplitTransaction> splitTransactions(CreateSplitRequest createSplitRequest) {
         GenericRequestContext ctx = GenericRequestContextHolder.get();
         User user = projectUtils.getUserFromToken();
@@ -230,6 +232,7 @@ public class SplitTransactionService {
         }
     }
 
+    @Transactional
     public List<SplitResponse> getAllSplits(){
         User user = projectUtils.getUserFromToken();
         if (user == null) {
@@ -250,6 +253,7 @@ public class SplitTransactionService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public List<SplitResponse> getAllSplitsWithTxnId(Long txnId) {
         User user = projectUtils.getUserFromToken();
         if (user == null) {
@@ -270,6 +274,7 @@ public class SplitTransactionService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public List<SplitResponse> updateSplitStatus(UpdateSplitStatusRequest updateSplitStatusRequest) {
         User user = projectUtils.getUserFromToken();
         if (user == null) {
