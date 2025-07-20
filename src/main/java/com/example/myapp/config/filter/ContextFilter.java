@@ -53,7 +53,7 @@ public class ContextFilter implements Filter {
             logOutput.append("    (" + context.getApiName() + ")\n");
             logOutput.append(context.getFormattedLogs());
             logOutput.append(context.getFormattedContext());
-            logOutput.append(context.getFormattedSqlLogs());
+//            logOutput.append(context.getFormattedSqlLogs());
             logOutput.append(context.getFormattedTrace());
             logOutput.append("</api_name>\n");
             flowLogger.info(logOutput.toString());
