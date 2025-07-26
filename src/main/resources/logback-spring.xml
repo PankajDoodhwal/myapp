@@ -3,33 +3,19 @@
 
     <!-- DEV Profile: Unchanged, focuses on simple console and single file logging -->
     <springProfile name="dev">
-        <appender name="DEV_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-            <encoder>
-                <pattern>
-                    %cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) |
-                    %highlight(%-5level) |
-                    %green([%thread]) |
-                    %blue(%logger{36}) :
-                    %msg%n
-                </pattern>
-            </encoder>
-        </appender>
-
         <appender name="DEV_FILE" class="ch.qos.logback.core.FileAppender">
             <file>logs/dev.log</file>
-            <append>true</append>
+            <append>false</append>
             <encoder>
                 <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
             </encoder>
         </appender>
 
-        <!-- Quieten down Hibernate logging to prevent SQL queries from showing -->
+        <!-- Quieten down Hibernate logging in production as well -->
         <logger name="org.hibernate.SQL" level="INFO" />
         <logger name="org.hibernate.type.descriptor.sql" level="INFO" />
 
-        <!-- Example root for dev: logging DEBUG to console and file -->
-        <root level="DEBUG">
-            <appender-ref ref="DEV_CONSOLE"/>
+        <root level="INFO">
             <appender-ref ref="DEV_FILE"/>
         </root>
     </springProfile>
@@ -53,13 +39,13 @@
                   Maximum size of each individual log file.
                   Can use KB, MB, GB. When this size is reached, a new file is created.
                 -->
-                <maxFileSize>10MB</maxFileSize>
+                <maxFileSize>100MB</maxFileSize>
 
                 <!--
                   Total size of all archived files. When the total size exceeds this,
                   the oldest archives will be deleted.
                 -->
-                <totalSizeCap>1GB</totalSizeCap>
+                <totalSizeCap>10GB</totalSizeCap>
 
                 <!--
                   How long to keep archived files (e.g., 30 days).
@@ -100,13 +86,13 @@
                   Maximum size of each individual log file.
                   Can use KB, MB, GB. When this size is reached, a new file is created.
                 -->
-                <maxFileSize>1MB</maxFileSize>
+                <maxFileSize>100MB</maxFileSize>
 
                 <!--
                   Total size of all archived files. When the total size exceeds this,
                   the oldest archives will be deleted.
                 -->
-                <totalSizeCap>1GB</totalSizeCap>
+                <totalSizeCap>10GB</totalSizeCap>
 
                 <!--
                   How long to keep archived files (e.g., 30 days).
