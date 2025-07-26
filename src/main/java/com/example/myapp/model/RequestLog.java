@@ -32,4 +32,7 @@ public class RequestLog {
     private LocalDateTime timeStamp;
     private Long durationMs;
     private Boolean success;
+
+    private String EntityType;
+    private String EntityId;
 }

@@ -1,22 +1,19 @@
 package com.example.myapp.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import java.util.List;
 
 @Entity
-@Data
+@Data // includes @Getter, @Setter, @ToString, etc.
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicUpdate
 @DynamicInsert
-@Getter
-@Setter
-@ToString
+@ToString(exclude = {"scopeList", "accountList"})
 public class User {
 
     @Id
@@ -24,6 +21,27 @@ public class User {
     private Long id;
 
     private String name;
+
+    @Column(unique = true, nullable = false)
     private String email;
 
+    private String password;
+
+    private String role = "USER";
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Scope> scopeList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Account> accountList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Transaction> transactionList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Friends> friendsList;
 }
